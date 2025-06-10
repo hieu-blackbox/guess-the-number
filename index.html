@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess The Number</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-br from-purple-500 to-pink-500 min-h-screen flex items-center justify-center font-['Poppins']">
+    <div class="bg-white p-8 rounded-xl shadow-2xl max-w-md w-full mx-4">
+        <h1 class="text-3xl font-semibold text-center mb-6 text-gray-800">Guess The Number</h1>
+        <p class="text-center text-gray-600 mb-6">Try to guess the number between <span class="font-semibold">1</span> and <span class="font-semibold">100</span></p>
+        
+        <div class="mb-6">
+            <input type="number" id="guessInput" 
+                class="w-full px-4 py-2 text-lg border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                placeholder="Enter your guess">
+        </div>
+        
+        <button onclick="makeGuess()" 
+            class="w-full bg-purple-500 text-white py-2 rounded-lg hover:bg-purple-600 transition-colors mb-4">
+            Submit Guess
+        </button>
+        
+        <div id="message" class="text-center mb-4 min-h-[24px] text-lg"></div>
+        
+        <div class="text-center text-gray-600">
+            Tries: <span id="tries" class="font-semibold">0</span>
+        </div>
+        
+        <button onclick="resetGame()" 
+            class="w-full mt-4 border border-purple-500 text-purple-500 py-2 rounded-lg hover:bg-purple-50 transition-colors">
+            New Game
+        </button>
+    </div>
+
+    <script>
+        let numberToGuess;
+        let tries = 0;
+        
+        function initGame() {
+            numberToGuess = Math.floor(Math.random() * 100) + 1;
+            tries = 0;
+            document.getElementById('tries').textContent = tries;
+            document.getElementById('message').textContent = '';
+            document.getElementById('guessInput').value = '';
+        }
+        
+        function makeGuess() {
+            const guessInput = document.getElementById('guessInput');
+            const guess = parseInt(guessInput.value);
+            const messageElement = document.getElementById('message');
+            
+            if (isNaN(guess) || guess < 1 || guess > 100) {
+                messageElement.textContent = 'Please enter a valid number between 1 and 100';
+                messageElement.className = 'text-center mb-4 min-h-[24px] text-lg text-red-500';
+                return;
+            }
+            
+            tries++;
+            document.getElementById('tries').textContent = tries;
+            
+            if (guess < numberToGuess) {
+                messageElement.textContent = 'Too low! Try again.';
+                messageElement.className = 'text-center mb-4 min-h-[24px] text-lg text-orange-500';
+            } else if (guess > numberToGuess) {
+                messageElement.textContent = 'Too high! Try again.';
+                messageElement.className = 'text-center mb-4 min-h-[24px] text-lg text-orange-500';
+            } else {
+                messageElement.textContent = `Congratulations! You've guessed the number in ${tries} tries!`;
+                messageElement.className = 'text-center mb-4 min-h-[24px] text-lg text-green-500';
+            }
+            
+            guessInput.value = '';
+            guessInput.focus();
+        }
+        
+        function resetGame() {
+            initGame();
+        }
+        
+        // Handle Enter key
+        document.getElementById('guessInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                makeGuess();
+            }
+        });
+        
+        // Initialize game on load
+        initGame();
+    </script>
+</body>
+</html>

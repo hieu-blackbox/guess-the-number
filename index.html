@@ -10,10 +10,25 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <div class="theme-toggle">
+        <button id="themeBtn" class="theme-btn" aria-label="Toggle theme">
+            <span class="theme-icon">🌙</span>
+        </button>
+    </div>
+
+    <div class="particles" id="particles"></div>
+
     <div class="container">
         <div class="game-card">
-            <h1 class="title">Guess the Number</h1>
-            <p class="subtitle">I'm thinking of a number between <span class="highlight">1</span> and <span class="highlight">100</span></p>
+            <div class="card-header">
+                <h1 class="title">
+                    <span class="title-icon">🎯</span>
+                    Guess the Number
+                </h1>
+                <div class="subtitle">
+                    I'm thinking of a number between <span class="highlight">1</span> and <span class="highlight">100</span>
+                </div>
+            </div>
             
             <div class="game-content">
                 <div class="input-group">

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess the Number Game</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="game-card">
+            <h1>🎯 Guess the Number</h1>
+            <p class="subtitle">I'm thinking of a number between <span id="range">1 and 100</span></p>
+            
+            <div id="game-area">
+                <div class="input-group">
+                    <input type="number" id="guess-input" placeholder="Enter your guess" min="1" max="100">
+                    <button id="guess-btn" class="btn btn-primary">Guess</button>
+                </div>
+                
+                <div id="feedback" class="feedback"></div>
+                
+                <div class="stats">
+                    <div class="stat-item">
+                        <span class="stat-label">Attempts:</span>
+                        <span id="attempts" class="stat-value">0</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="actions">
+                <button id="new-game-btn" class="btn btn-secondary">New Game</button>
+                <button id="reset-btn" class="btn btn-outline">Reset</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

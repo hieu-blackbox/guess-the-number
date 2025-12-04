@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess the Number Game</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        .game-info {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .range-display {
+            font-size: 1.2em;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .tries-display {
+            font-size: 1.5em;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.2em;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            text-align: center;
+            transition: border-color 0.3s;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            flex: 1;
+            padding: 15px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .message {
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+            font-weight: 500;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 2px solid #c3e6cb;
+        }
+
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 2px solid #f5c6cb;
+        }
+
+        .message.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 2px solid #bee5eb;
+        }
+
+        .message.warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 2px solid #ffeaa7;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .settings {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .settings h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .settings-inputs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .settings-inputs input {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Guess the Number</h1>
+        <p class="subtitle">Can you guess the secret number?</p>
+
+        <div id="settings" class="settings">
+            <h3>Game Settings</h3>
+            <div class="settings-inputs">
+                <input type="number" id="minNum" value="1" placeholder="Min">
+                <input type="number" id="maxNum" value="100" placeholder="Max">
+            </div>
+            <button class="btn-primary" onclick="startGame()">Start New Game</button>
+        </div>
+
+        <div id="gameArea" class="hidden">
+            <div class="game-info">
+                <div class="range-display">Range: <span id="rangeDisplay">1 - 100</span></div>
+                <div class="tries-display">Attempts: <span id="triesDisplay">0</span></div>
+            </div>
+
+            <div id="messageArea"></div>
+
+            <div class="input-group">
+                <input type="number" id="guessInput" placeholder="Enter your guess" min="1" max="100">
+            </div>
+
+            <div class="button-group">
+                <button class="btn-primary" onclick="makeGuess()" id="guessBtn">Guess</button>
+                <button class="btn-secondary" onclick="resetGame()">New Game</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let gameStarted = false;
+        let gameOver = false;
+
+        function showMessage(message, type) {
+            const messageArea = document.getElementById('messageArea');
+            messageArea.innerHTML = `<div class="message ${type}">${message}</div>`;
+        }
+
+        function clearMessage() {
+            document.getElementById('messageArea').innerHTML = '';
+        }
+
+        async function startGame() {
+            const minNum = parseInt(document.getElementById('minNum').value) || 1;
+            const maxNum = parseInt(document.getElementById('maxNum').value) || 100;
+
+            if (minNum >= maxNum) {
+                alert('Minimum number must be less than maximum number!');
+                return;
+            }
+
+            try {
+                const response = await fetch('/start', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ min: minNum, max: maxNum })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    gameStarted = true;
+                    gameOver = false;
+                    document.getElementById('settings').classList.add('hidden');
+                    document.getElementById('gameArea').classList.remove('hidden');
+                    document.getElementById('rangeDisplay').textContent = `${data.min} - ${data.max}`;
+                    document.getElementById('triesDisplay').textContent = '0';
+                    document.getElementById('guessInput').min = data.min;
+                    document.getElementById('guessInput').max = data.max;
+                    document.getElementById('guessInput').value = '';
+                    document.getElementById('guessInput').focus();
+                    showMessage(data.message, 'info');
+                }
+            } catch (error) {
+                alert('Error starting game: ' + error.message);
+            }
+        }
+
+        async function makeGuess() {
+            if (!gameStarted || gameOver) {
+                return;
+            }
+
+            const guess = document.getElementById('guessInput').value;
+
+            if (!guess) {
+                showMessage('Please enter a number!', 'error');
+                return;
+            }
+
+            try {
+                const response = await fetch('/guess', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ guess: parseInt(guess) })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    document.getElementById('triesDisplay').textContent = data.tries;
+
+                    if (data.result === 'correct') {
+                        showMessage(data.message, 'success');
+                        gameOver = true;
+                        document.getElementById('guessBtn').disabled = true;
+                        document.getElementById('guessInput').disabled = true;
+                    } else if (data.result === 'low') {
+                        showMessage(data.message + ' 📈', 'warning');
+                    } else if (data.result === 'high') {
+                        showMessage(data.message + ' 📉', 'warning');
+                    }
+
+                    document.getElementById('guessInput').value = '';
+                    document.getElementById('guessInput').focus();
+                } else {
+                    showMessage(data.message, 'error');
+                }
+            } catch (error) {
+                showMessage('Error making guess: ' + error.message, 'error');
+            }
+        }
+
+        async function resetGame() {
+            try {
+                const response = await fetch('/reset', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    gameStarted = false;
+                    gameOver = false;
+                    document.getElementById('settings').classList.remove('hidden');
+                    document.getElementById('gameArea').classList.add('hidden');
+                    document.getElementById('guessBtn').disabled = false;
+                    document.getElementById('guessInput').disabled = false;
+                    clearMessage();
+                }
+            } catch (error) {
+                alert('Error resetting game: ' + error.message);
+            }
+        }
+
+        // Allow Enter key to submit guess
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('guessInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    makeGuess();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

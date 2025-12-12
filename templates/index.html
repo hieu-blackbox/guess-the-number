@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess the Number Game</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="game-card">
+            <h1 class="title">🎯 Guess the Number</h1>
+            
+            <div id="setup-screen" class="screen active">
+                <p class="description">Choose your difficulty level:</p>
+                <div class="difficulty-buttons">
+                    <button class="btn btn-easy" onclick="startGame(1, 50)">Easy (1-50)</button>
+                    <button class="btn btn-medium" onclick="startGame(1, 100)">Medium (1-100)</button>
+                    <button class="btn btn-hard" onclick="startGame(1, 200)">Hard (1-200)</button>
+                </div>
+            </div>
+            
+            <div id="game-screen" class="screen">
+                <div class="game-info">
+                    <p id="range-display" class="range">Range: 1 - 100</p>
+                    <p id="tries-display" class="tries">Tries: 0</p>
+                </div>
+                
+                <div id="feedback" class="feedback"></div>
+                
+                <div class="input-group">
+                    <input 
+                        type="number" 
+                        id="guess-input" 
+                        placeholder="Enter your guess"
+                        min="1"
+                        onkeypress="handleKeyPress(event)"
+                    >
+                    <button class="btn btn-primary" onclick="makeGuess()">Guess</button>
+                </div>
+                
+                <button class="btn btn-secondary" onclick="resetGame()">New Game</button>
+            </div>
+            
+            <div id="win-screen" class="screen">
+                <div class="win-animation">🎉</div>
+                <h2 id="win-message" class="win-message"></h2>
+                <p id="win-tries" class="win-tries"></p>
+                <button class="btn btn-primary" onclick="resetGame()">Play Again</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

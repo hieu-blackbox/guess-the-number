@@ -1,0 +1,40 @@
+{
+  "name": "guess-the-number-typescript",
+  "version": "1.0.0",
+  "description": "A beautiful, interactive web-based number guessing game built with TypeScript, Express, and modern web technologies.",
+  "main": "dist/server.js",
+  "scripts": {
+    "build": "tsc && tsc -p tsconfig.client.json",
+    "build:server": "tsc",
+    "build:client": "tsc -p tsconfig.client.json",
+    "start": "node dist/server.js",
+    "dev": "nodemon --exec ts-node src/server.ts",
+    "clean": "rm -rf dist src/public/js/*.js src/public/js/*.map",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hieu-blackbox/guess-the-number.git"
+  },
+  "keywords": ["typescript", "express", "game", "guess-the-number"],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hieu-blackbox/guess-the-number/issues"
+  },
+  "homepage": "https://github.com/hieu-blackbox/guess-the-number#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.2.1",
+    "express-session": "^1.18.2"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/express-session": "^1.18.2",
+    "@types/node": "^25.0.1",
+    "nodemon": "^3.1.11",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}

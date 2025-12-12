@@ -3,20 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guess the Number Game</title>
+    <title>🎯 Guess the Number - Ultimate Challenge</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+    <canvas id="particles"></canvas>
     <div class="container">
         <div class="game-card">
             <h1 class="title">🎯 Guess the Number</h1>
             
             <div id="setup-screen" class="screen active">
-                <p class="description">Choose your difficulty level:</p>
+                <p class="description">🎮 Choose your difficulty level and test your guessing skills!</p>
                 <div class="difficulty-buttons">
-                    <button class="btn btn-easy" onclick="startGame(1, 50)">Easy (1-50)</button>
-                    <button class="btn btn-medium" onclick="startGame(1, 100)">Medium (1-100)</button>
-                    <button class="btn btn-hard" onclick="startGame(1, 200)">Hard (1-200)</button>
+                    <button class="btn btn-easy" onclick="startGame(1, 50)">
+                        <span class="btn-icon">🌱</span> Easy (1-50)
+                    </button>
+                    <button class="btn btn-medium" onclick="startGame(1, 100)">
+                        <span class="btn-icon">🔥</span> Medium (1-100)
+                    </button>
+                    <button class="btn btn-hard" onclick="startGame(1, 200)">
+                        <span class="btn-icon">💀</span> Hard (1-200)
+                    </button>
                 </div>
             </div>
             
@@ -43,10 +50,13 @@
             </div>
             
             <div id="win-screen" class="screen">
+                <div class="confetti-container" id="confetti"></div>
                 <div class="win-animation">🎉</div>
                 <h2 id="win-message" class="win-message"></h2>
                 <p id="win-tries" class="win-tries"></p>
-                <button class="btn btn-primary" onclick="resetGame()">Play Again</button>
+                <button class="btn btn-primary" onclick="resetGame()">
+                    <span class="btn-icon">🔄</span> Play Again
+                </button>
             </div>
         </div>
     </div>

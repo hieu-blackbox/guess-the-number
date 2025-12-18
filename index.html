@@ -3,29 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A fun number guessing game with multiple difficulty levels">
     <title>Guess the Number Game</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <div class="game-card">
-            <h1>Guess the Number</h1>
-            <p class="instructions">I'm thinking of a number between <span id="min-num">1</span> and <span id="max-num">100</span></p>
+            <header class="game-header">
+                <h1>🎯 Guess the Number</h1>
+                <div class="high-score">
+                    <span class="label">Best Score:</span>
+                    <span id="best-score" class="value">--</span>
+                </div>
+            </header>
+
+            <div class="difficulty-selector" id="difficulty-selector">
+                <h2>Choose Difficulty</h2>
+                <div class="difficulty-buttons">
+                    <button class="difficulty-btn" data-difficulty="easy">
+                        <span class="difficulty-title">Easy</span>
+                        <span class="difficulty-range">1-50</span>
+                    </button>
+                    <button class="difficulty-btn active" data-difficulty="medium">
+                        <span class="difficulty-title">Medium</span>
+                        <span class="difficulty-range">1-100</span>
+                    </button>
+                    <button class="difficulty-btn" data-difficulty="hard">
+                        <span class="difficulty-title">Hard</span>
+                        <span class="difficulty-range">1-500</span>
+                    </button>
+                </div>
+                <button id="start-game-btn" class="primary-btn">Start Game</button>
+            </div>
             
-            <div class="game-area">
+            <div class="game-area" id="game-area" style="display: none;">
+                <p class="instructions">
+                    I'm thinking of a number between 
+                    <span id="min-num" class="highlight">1</span> and 
+                    <span id="max-num" class="highlight">100</span>
+                </p>
+                
                 <div class="input-group">
-                    <input type="number" id="guess-input" placeholder="Enter your guess" min="1" max="100">
-                    <button id="submit-btn" onclick="makeGuess()">Guess</button>
+                    <input 
+                        type="number" 
+                        id="guess-input" 
+                        placeholder="Enter your guess" 
+                        min="1" 
+                        max="100"
+                        aria-label="Enter your guess"
+                        autocomplete="off"
+                    >
+                    <button id="submit-btn" class="primary-btn" aria-label="Submit guess">
+                        Guess
+                    </button>
                 </div>
                 
-                <div id="feedback" class="feedback"></div>
+                <div id="feedback" class="feedback" role="alert" aria-live="polite"></div>
                 
-                <div class="stats">
-                    <p>Tries: <span id="tries">0</span></p>
+                <div class="stats-container">
+                    <div class="stat-item">
+                        <span class="stat-label">Tries</span>
+                        <span id="tries" class="stat-value">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Hints Used</span>
+                        <span id="hints-used" class="stat-value">0</span>
+                    </div>
+                </div>
+
+                <div class="hint-section">
+                    <button id="hint-btn" class="secondary-btn" aria-label="Get a hint">
+                        💡 Get Hint
+                    </button>
+                    <div id="hint-text" class="hint-text"></div>
+                </div>
+
+                <div class="guess-history">
+                    <h3>Your Guesses</h3>
+                    <div id="history-list" class="history-list"></div>
                 </div>
             </div>
             
-            <button id="restart-btn" onclick="restartGame()" style="display: none;">Play Again</button>
+            <div class="game-over" id="game-over" style="display: none;">
+                <div class="celebration">🎉</div>
+                <h2 id="game-over-title">Congratulations!</h2>
+                <p id="game-over-message"></p>
+                <div class="game-over-stats">
+                    <div class="stat-box">
+                        <span class="stat-number" id="final-tries">0</span>
+                        <span class="stat-text">Tries</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-number" id="final-hints">0</span>
+                        <span class="stat-text">Hints</span>
+                    </div>
+                </div>
+                <button id="restart-btn" class="primary-btn">Play Again</button>
+                <button id="change-difficulty-btn" class="secondary-btn">Change Difficulty</button>
+            </div>
         </div>
     </div>
     

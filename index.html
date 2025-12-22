@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess the Number Game</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="game-card">
+            <div class="header">
+                <h1>Guess the Number</h1>
+                <p class="subtitle">I'm thinking of a number between <span class="highlight">1</span> and <span class="highlight">100</span></p>
+            </div>
+
+            <div class="game-content">
+                <div class="stats">
+                    <div class="stat-item">
+                        <span class="stat-label">Tries</span>
+                        <span class="stat-value" id="tries">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Range</span>
+                        <span class="stat-value" id="range">1-100</span>
+                    </div>
+                </div>
+
+                <div class="feedback-area">
+                    <div class="feedback" id="feedback">
+                        <p>Make your first guess!</p>
+                    </div>
+                </div>
+
+                <div class="input-area">
+                    <input 
+                        type="number" 
+                        id="guessInput" 
+                        placeholder="Enter your guess" 
+                        min="1" 
+                        max="100"
+                        autofocus
+                    >
+                    <button id="guessButton" class="btn-primary">
+                        <span>Guess</span>
+                    </button>
+                </div>
+
+                <button id="resetButton" class="btn-secondary">
+                    <span>New Game</span>
+                </button>
+            </div>
+
+            <div class="history" id="history">
+                <h3>Your Guesses</h3>
+                <div class="history-list" id="historyList">
+                    <p class="empty-state">No guesses yet</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>

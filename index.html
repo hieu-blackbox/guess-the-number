@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess the Number Game</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="game-card">
+            <h1 class="title">🎯 Guess the Number</h1>
+            <p class="subtitle">I'm thinking of a number between <span id="min-range">1</span> and <span id="max-range">100</span></p>
+            
+            <div class="game-content">
+                <div class="stats">
+                    <div class="stat-item">
+                        <span class="stat-label">Tries</span>
+                        <span class="stat-value" id="tries">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Best Score</span>
+                        <span class="stat-value" id="best-score">-</span>
+                    </div>
+                </div>
+
+                <div class="feedback-area">
+                    <div class="feedback" id="feedback">
+                        <p>Make your first guess!</p>
+                    </div>
+                </div>
+
+                <div class="input-section">
+                    <input 
+                        type="number" 
+                        id="guess-input" 
+                        placeholder="Enter your guess"
+                        min="1"
+                        max="100"
+                        autofocus
+                    >
+                    <button id="submit-btn" class="btn btn-primary">
+                        Submit Guess
+                    </button>
+                </div>
+
+                <div class="range-selector">
+                    <label for="difficulty">Difficulty:</label>
+                    <select id="difficulty">
+                        <option value="easy">Easy (1-50)</option>
+                        <option value="medium" selected>Medium (1-100)</option>
+                        <option value="hard">Hard (1-500)</option>
+                        <option value="expert">Expert (1-1000)</option>
+                    </select>
+                </div>
+
+                <button id="restart-btn" class="btn btn-secondary">
+                    New Game
+                </button>
+            </div>
+
+            <div class="history-section">
+                <h3>Your Guesses</h3>
+                <div id="guess-history" class="guess-history"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
